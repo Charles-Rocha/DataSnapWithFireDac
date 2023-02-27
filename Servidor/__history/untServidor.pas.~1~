@@ -1,0 +1,25 @@
+unit untServidor;
+
+interface
+
+uses Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  IPPeerServer,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  TfrmServidor = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmServidor: TfrmServidor;
+
+implementation
+
+{$R *.dfm}
+
+end.
+

@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2022/05/12 01:10:12.000.454,=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/06/27 15:34:46.000.885,=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2022/06/27 15:59:05.000.316,=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 11:24:21.000.337,=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 11:25:08.000.684,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untCliente.pas=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 11:25:08.000.684,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untCliente.dfm=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
+    <Transaction>2023/02/26 11:25:16.000.012,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Cliente.dproj=C:\Users\charl\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
+    <Transaction>2023/02/26 16:45:26.000.579,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\ClientClassesUnit1.pas</Transaction>
+    <Transaction>2023/02/26 16:45:26.000.776,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\ClientModuleUnit1.pas</Transaction>
+    <Transaction>2023/02/26 16:54:32.000.652,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 16:55:00.000.281,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 16:56:50.000.988,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 17:21:05.000.860,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 18:12:04.000.140,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 18:18:11.000.858,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 18:28:26.000.963,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 18:48:18.000.421,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 20:35:39.000.623,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 22:54:25.000.137,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/26 23:28:20.000.185,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 01:46:12.000.709,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 04:40:06.000.201,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 04:55:59.000.082,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 05:02:11.000.325,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 06:49:37.000.957,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 09:49:10.000.619,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 09:49:45.000.068,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untConectar.pas</Transaction>
+    <Transaction>2023/02/27 09:49:45.000.068,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.dfm=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untConectar.dfm</Transaction>
+    <Transaction>2023/02/27 10:19:54.000.639,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 10:20:46.000.237,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untInserir.pas</Transaction>
+    <Transaction>2023/02/27 10:20:46.000.237,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.dfm=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untInserir.dfm</Transaction>
+    <Transaction>2023/02/27 10:28:08.000.123,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+    <Transaction>2023/02/27 10:28:47.000.607,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untEditar.pas</Transaction>
+    <Transaction>2023/02/27 10:28:47.000.607,C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.dfm=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\untEditar.dfm</Transaction>
+    <Transaction>2023/02/27 10:37:47.000.107,=C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Cliente\Unit1.pas</Transaction>
+  </Transactions>
+</BorlandProject>

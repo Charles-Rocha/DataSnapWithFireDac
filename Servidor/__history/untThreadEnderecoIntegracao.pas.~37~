@@ -1,0 +1,184 @@
+unit untThreadEnderecoIntegracao;
+
+interface
+
+uses
+  System.Classes, System.SysUtils, Vcl.ComCtrls, Vcl.Forms, Vcl.Controls,
+  Vcl.ExtCtrls, System.IniFiles, FireDAC.Comp.Client, Datasnap.DBClient,
+  REST.Response.Adapter, REST.Client;
+
+type
+  TfThreadEnderecoIntegracao = class(TThread)
+  private
+    { Private declarations }
+    //FCount: Integer;
+    //FAltcoin: string;
+    FPrecoInicial: string;
+    //FPrecoAtual: string;
+    //FUltimoVolume: string;
+    FListaCryptos: TStringList;
+    FQryEndereco: TFDQuery;
+    FClientDataSet: TClientDataSet;
+    FRESTResponseDataSetAdapter: TRESTResponseDataSetAdapter;
+    FRESTRequest: TRESTRequest;
+    FFDConnection: TFDConnection;
+
+    procedure InseriEnderecoIntegracao(idendereco: integer;
+      sDsuf, sNmcidade, sNmbairro, sNmlogradouro, sDscomplemento: string);
+  protected
+    procedure Execute; override;
+
+  public
+    property ListaCryptos: TStringList read FListaCryptos write FListaCryptos;
+    property QryEndereco: TFDQuery read FQryEndereco write FQryEndereco;
+    property ClientDataSet: TClientDataSet read FClientDataSet write FClientDataSet;
+    property RESTResponseDataSetAdapter: TRESTResponseDataSetAdapter read FRESTResponseDataSetAdapter write FRESTResponseDataSetAdapter;
+    property RESTRequest: TRESTRequest read FRESTRequest write FRESTRequest;
+    property FDConnection: TFDConnection read FFDConnection write FFDConnection;
+  end;
+
+implementation
+
+//uses
+uses ServerMethodsUnit1;  //untPrincipal, untAtualizarCryptos;
+
+procedure TfThreadEnderecoIntegracao.Execute;
+var
+  sAltcoin, sAltcoinIcon, sBaseAsset, sCaminhoPastaImagens, sCaminhoIniAlts: string;
+  i, iImageIndex: integer;
+  itemMonitor: TListItem;
+  ArquivoIni : TIniFile;
+  sCep, sDsuf, sNmcidade, sNmbairro, sNmlogradouro, sDscomplemento: string;
+  idendereco: integer;
+begin
+  //sCaminhoPastaImagens := ExtractfilePath(Application.ExeName) + 'crypto_images\';
+  //sCaminhoIniAlts := ExtractfilePath(Application.ExeName) + 'CryptosListaCompleta.ini';
+  //ArquivoIni := TINIFile.Create(sCaminhoIniAlts);
+
+  {with frmPrincipal do
+    begin
+      //ListViewMonitor.Items.Clear;
+      SetLength(aPrecoInicial, FListaCryptos.Count);
+      TotalProgresso := 0;
+      Progressbar1.Max := ListarCryptos.Count;
+      Progressbar1.Step := 1;
+      ProgressBar1.Position := 0;
+    end;}
+
+  FQryEndereco.First;
+  while not FQryEndereco.Eof do
+  begin
+    sCep := FQryEndereco.FieldByName('dscep').AsString;
+    FClientDataSet.Active := false;
+    FRESTResponseDataSetAdapter.Active := false;
+
+    FRESTRequest.Resource := sCep + '/json';
+
+    FRESTResponseDataSetAdapter.ClearDataSet;
+    FRESTResponseDataSetAdapter.Active := true;
+    FRESTResponseDataSetAdapter.UpdateDataSet;
+
+    FRESTRequest.Execute;
+    FClientDataSet.Active := true;
+
+    idendereco := FQryEndereco.FieldByName('idendereco').AsInteger;
+    sDsuf := ClientDataSet.FieldByName('uf').AsString;
+    sNmcidade := ClientDataSet.FieldByName('localidade').AsString;
+    sNmbairro := ClientDataSet.FieldByName('bairro').AsString;
+    sNmlogradouro := ClientDataSet.FieldByName('logradouro').AsString;
+    sDscomplemento := ClientDataSet.FieldByName('complemento').AsString;
+
+    InseriEnderecoIntegracao(idendereco, sDsuf, sNmcidade, sNmbairro, sNmlogradouro, sDscomplemento);
+
+    FQryEndereco.Next;
+  end;
+end;
+
+procedure TfThreadEnderecoIntegracao.InseriEnderecoIntegracao(idendereco: integer;
+  sDsUf, sNmCidade, sNmBairro, sNmLogradouro, sDsComplemento: string);
+var
+  qryEnderecoIntegracao: TFDQuery;
+begin
+  {qryEnderecoIntegracao := TFDQuery.Create(nil);
+  try
+    qryEnderecoIntegracao.Connection := FFDConnection;
+    qryEnderecoIntegracao.Close;
+    qryEnderecoIntegracao.SQL.Clear;
+    qryEnderecoIntegracao.SQL.Add('INSERT INTO endereco_integracao ');
+    qryEnderecoIntegracao.SQL.Add(' (idendereco, dsuf, nmcidade, nmbairro, nmlogradouro, dscomplemento) ');
+    qryEnderecoIntegracao.SQL.Add('VALUES ( ');
+    qryEnderecoIntegracao.SQL.Add(IntToStr(idendereco));
+    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sDsuf));
+    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sNmCidade));
+    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sNmBairro));
+    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sNmLogradouro));
+    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sDsComplemento));
+    qryEnderecoIntegracao.SQL.Add(' )');
+    qryEnderecoIntegracao.ExecSQL;
+  finally
+    qryEnderecoIntegracao.Free;
+  end;}
+
+begin
+  //GerarListaTemporaria(sPathFile);
+  qryEnderecoIntegracao := TFDQuery.Create(nil);
+  //mtListaTemporaria.DisableControls;
+  FFDConnection.StartTransaction;
+
+  try
+    try
+      qryEnderecoIntegracao.Connection := FDConnection;
+
+      qryEnderecoIntegracao.SQL.Add(' with nova_pessoa as ( ');
+      qryEnderecoIntegracao.SQL.Add(' insert into pessoa (flnatureza, dsdocumento, nmprimeiro, nmsegundo, dtregistro) ');
+      qryEnderecoIntegracao.SQL.Add(' values (:flnatureza, :dsdocumento, :nmprimeiro, :nmsegundo, :dtregistro) ');
+      qryEnderecoIntegracao.SQL.Add(' returning idpessoa ) ');
+      qryEnderecoIntegracao.SQL.Add(' insert into endereco(idpessoa, dscep) ');
+      qryEnderecoIntegracao.SQL.Add(' select idpessoa, :dscep from nova_pessoa; ');
+
+      qryEnderecoIntegracao.Params.ArraySize := mtListaTemporaria.RecordCount;
+
+      mtListaTemporaria.First;
+      while not mtListaTemporaria.Eof do
+      begin
+        qryEnderecoIntegracao.ParamByName('flnatureza').AsIntegers[Pred(mtListaTemporaria.RecNo)] := mtListaTemporariaflnatureza.AsInteger;
+        qryEnderecoIntegracao.ParamByName('dsdocumento').AsStrings[Pred(mtListaTemporaria.RecNo)] := mtListaTemporariadsdocumento.AsString;
+        qryEnderecoIntegracao.ParamByName('nmprimeiro').AsStrings[Pred(mtListaTemporaria.RecNo)] := mtListaTemporarianmprimeiro.AsString;
+        qryEnderecoIntegracao.ParamByName('nmsegundo').AsStrings[Pred(mtListaTemporaria.RecNo)] := mtListaTemporarianmsegundo.AsString;
+        qryEnderecoIntegracao.ParamByName('dtregistro').AsDateTimes[Pred(mtListaTemporaria.RecNo)] := now;
+        qryEnderecoIntegracao.ParamByName('dscep').AsStrings[Pred(mtListaTemporaria.RecNo)] := mtListaTemporariadscep.AsString;
+        mtListaTemporaria.Next;
+      end;
+
+      if (qryEnderecoIntegracao.Params.ArraySize > 0) then
+      begin
+        qryEnderecoIntegracao.Execute(10000, 0);
+        qryEnderecoIntegracao.Execute(10000 + 10000, 10000);
+        qryEnderecoIntegracao.Execute(10000 + 20000, 20000);
+        qryEnderecoIntegracao.Execute(10000 + 30000, 30000);
+        qryEnderecoIntegracao.Execute(10000 + 40000, 40000);
+      end;
+
+      if FFDConnection.InTransaction then
+        FFDConnection.Commit;
+
+      FQryEndereco.Close;
+      FQryEndereco.Open();
+      FQryEndereco.FetchAll;
+    except
+      on E:Exception do
+      begin
+        if FFDConnection.InTransaction then
+          FFDConnection.Rollback;
+        raise;
+      end;
+    end;
+  finally
+    mtListaTemporaria.EnableControls;
+    qryEnderecoIntegracao.Free;
+  end;
+end;
+
+end;
+
+end.

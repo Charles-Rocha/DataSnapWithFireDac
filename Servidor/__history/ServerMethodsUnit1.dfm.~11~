@@ -1,0 +1,103 @@
+object ServerMethods1: TServerMethods1
+  OldCreateOrder = False
+  Height = 369
+  Width = 490
+  object FDGUIxWaitCursor1: TFDGUIxWaitCursor
+    Provider = 'Forms'
+    Left = 40
+    Top = 8
+  end
+  object FDPhysPgDriverLink1: TFDPhysPgDriverLink
+    VendorHome = 
+      'C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Se' +
+      'rvidor\Win32\Debug\'
+    Left = 40
+    Top = 72
+  end
+  object FDConnection1: TFDConnection
+    Params.Strings = (
+      'Database=Pessoas'
+      'User_Name=postgres'
+      'Password=WKTechnology'
+      'Server=localhost'
+      'DriverID=PG')
+    Connected = True
+    LoginPrompt = False
+    Left = 168
+    Top = 8
+  end
+  object qryPessoa: TFDQuery
+    Connection = FDConnection1
+    SQL.Strings = (
+      'select * from pessoa'
+      'order by idpessoa')
+    Left = 168
+    Top = 72
+  end
+  object dspPessoa: TDataSetProvider
+    DataSet = qryPessoa
+    Left = 168
+    Top = 136
+  end
+  object qryCadastramentoEmLote: TFDQuery
+    Connection = FDConnection1
+    Left = 272
+    Top = 72
+  end
+  object mtListaTemporaria: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired]
+    UpdateOptions.CheckRequired = False
+    AutoCommitUpdates = False
+    Left = 272
+    Top = 8
+    object mtListaTemporariaflnatureza: TIntegerField
+      FieldName = 'flnatureza'
+    end
+    object mtListaTemporariadsdocumento: TStringField
+      FieldName = 'dsdocumento'
+    end
+    object mtListaTemporarianmprimeiro: TStringField
+      FieldName = 'nmprimeiro'
+    end
+    object mtListaTemporarianmsegundo: TStringField
+      FieldName = 'nmsegundo'
+    end
+    object mtListaTemporariadscep: TStringField
+      FieldName = 'dscep'
+    end
+  end
+  object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
+    FieldDefs = <>
+    Response = RESTResponse1
+    Left = 168
+    Top = 264
+  end
+  object RESTResponse1: TRESTResponse
+    Left = 320
+    Top = 208
+  end
+  object RESTRequest1: TRESTRequest
+    Client = RESTClient1
+    Params = <>
+    Response = RESTResponse1
+    Timeout = 10000
+    SynchronizedEvents = False
+    Left = 240
+    Top = 208
+  end
+  object RESTClient1: TRESTClient
+    Accept = 'application/json, text/plain; q=0.9, text/html;q=0.8,'
+    AcceptCharset = 'UTF-8, *;q=0.8'
+    AcceptEncoding = 'identity'
+    BaseURL = 'http://viacep.com.br/ws'
+    Params = <>
+    HandleRedirects = True
+    RaiseExceptionOn500 = False
+    Left = 168
+    Top = 208
+  end
+end

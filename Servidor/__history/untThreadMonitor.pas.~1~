@@ -1,0 +1,169 @@
+unit untThreadMonitor;
+
+interface
+
+uses
+  System.Classes, System.SysUtils, Vcl.ComCtrls, Vcl.Forms, Vcl.Controls, Vcl.ExtCtrls, System.IniFiles;
+
+type
+  TfThreadMonitor = class(TThread)
+  private
+    { Private declarations }
+    //FCount: Integer;
+    //FAltcoin: string;
+    FPrecoInicial: string;
+    //FPrecoAtual: string;
+    //FUltimoVolume: string;
+    FListaCryptos: TStringList;
+
+  protected
+    procedure Execute; override;
+    procedure AtualizeMemo2;
+
+  public
+    property ListaCryptos: TStringList read FListaCryptos write FListaCryptos;
+  end;
+
+implementation
+
+uses
+  untPrincipal, untAtualizarCryptos;
+
+procedure TfThreadMonitor.AtualizeMemo2;
+begin
+  with frmPrincipal do
+    begin
+      {Memo2.Lines.Add('-------------------------------------------------');
+      Memo2.Lines.Add('Hora: ' + TimeToStr(now));
+      Memo2.Lines.Add('Altcoin: ' + FAltcoin);
+      Memo2.Lines.Add('Preço Inicial: ' + FPrecoInicial);
+      Memo2.Lines.Add('Preço Atual: ' + FPrecoAtual);
+      Memo2.Lines.Add('Volume Atual: ' + FUltimoVolume);
+      Memo2.Lines.Add('-------------------------------------------------');
+      Memo2.Lines.Add('');}
+    end;
+end;
+
+procedure TfThreadMonitor.Execute;
+var
+  sAltcoin, sAltcoinIcon, sBaseAsset, sCaminhoPastaImagens, sCaminhoIniAlts: string;
+  i, iImageIndex: integer;
+  itemMonitor: TListItem;
+  ArquivoIni : TIniFile;
+begin
+  sCaminhoPastaImagens := ExtractfilePath(Application.ExeName) + 'crypto_images\';
+  sCaminhoIniAlts := ExtractfilePath(Application.ExeName) + 'CryptosListaCompleta.ini';
+  ArquivoIni := TINIFile.Create(sCaminhoIniAlts);
+  with frmPrincipal do
+    begin
+      //ListViewMonitor.Items.Clear;
+      SetLength(aPrecoInicial, FListaCryptos.Count);
+      TotalProgresso := 0;
+      Progressbar1.Max := ListarCryptos.Count;
+      Progressbar1.Step := 1;
+      ProgressBar1.Position := 0;
+    end;
+
+  for i := 0 to FListaCryptos.Count-1 do
+    begin
+      if frmPrincipal.PararMonitoramento then
+        begin
+          exit;
+        end;
+
+      if frmPrincipal.PausarMonitoramento then
+        begin
+          while frmPrincipal.PausarMonitoramento do
+            begin
+              //
+            end;
+        end;
+
+      sBaseAsset := FListaCryptos.Strings[i];
+      sAltcoin := LowerCase(sBaseAsset);
+      sAltcoinIcon := sAltcoin + '.png';
+
+      with frmPrincipal do
+        begin
+          Sleep(100);
+
+          ClientDataSet1.Active := false;
+          RESTResponseDataSetAdapter1.Active := false;
+
+          //RESTClient2.BaseURL := RESTClient2.BaseURL + '/ticker/price?symbol=' + Edit1.Text + 'BTC';
+          RESTRequest1.Resource := '/ticker/24hr?symbol=' + sBaseAsset + 'BTC';
+
+          RESTResponseDataSetAdapter1.ClearDataSet;
+          RESTResponseDataSetAdapter1.Active := true;
+          RESTResponseDataSetAdapter1.UpdateDataSet;
+
+          RESTRequest1.Execute;
+          ClientDataSet1.Active := true;
+
+          FPrecoInicial := ClientDataSet1lastPrice.AsString;
+          aPrecoInicial[i] := FPrecoInicial;
+        end;
+
+      with frmPrincipal do
+        begin
+          if i = 0 then
+            begin
+              ProgressBar1.Position := 1;
+              Sleep(500);
+            end;
+
+          {FAltcoin := sAltcoin;
+          FPrecoInicial := aPrecoInicial[i];
+          FPrecoAtual := ClientDataSet1lastPrice.AsString;
+          FUltimoVolume := ClientDataSet1quoteVolume.AsString;}
+
+          //Synchronize(AtualizeMemo2);
+
+          //Original
+          {Memo2.Lines.Add('-----------------------------');
+          Memo2.Lines.Add('Hora: ' + TimeToStr(now));
+          Memo2.Lines.Add('Altcoin: ' + sAltcoin);
+          Memo2.Lines.Add('Preço Inicial: ' + aPrecoInicial[i]);
+          Memo2.Lines.Add('Preço Atual: ' + ClientDataSet1lastPrice.AsString);
+          Memo2.Lines.Add('Volume Atual: ' + ClientDataSet1quoteVolume.AsString);
+          Memo2.Lines.Add('-----------------------------');
+          Memo2.Lines.Add('');}
+
+          if FileExists(sCaminhoPastaImagens + sAltcoinIcon) then
+            begin
+              //iImageIndex := CarregaIconeAlt(sAltcoin, sAltcoinIcon, ImageListMonitor);
+              iImageIndex := ArquivoIni.ReadInteger(sBaseAsset + '/BTC','ImageIndex', -1);
+
+              itemMonitor := ListViewMonitor.Items.Add;
+              itemMonitor.ImageIndex := iImageIndex;
+              itemMonitor.Caption := sBaseAsset;
+              itemMonitor.SubItems.Add(aPrecoInicial[i]);
+              itemMonitor.SubItems.Add(ClientDataSet1lastPrice.AsString);
+              itemMonitor.SubItems.Add(ClientDataSet1quoteVolume.AsString);
+              itemMonitor.SubItems.Add(TimeToStr(now));
+              itemMonitor.SubItems.Add('0.00%');
+              itemMonitor.SubItemImages[4] := 0;
+            end
+          else
+            begin
+              itemMonitor := ListViewMonitor.Items.Add;
+              itemMonitor.ImageIndex := -1;
+              itemMonitor.Caption := sBaseAsset;
+              itemMonitor.SubItems.Add(aPrecoInicial[i]);
+              itemMonitor.SubItems.Add(ClientDataSet1lastPrice.AsString);
+              itemMonitor.SubItems.Add(ClientDataSet1quoteVolume.AsString);
+              itemMonitor.SubItems.Add(TimeToStr(now));
+              itemMonitor.SubItems.Add('0.00%');
+              itemMonitor.SubItemImages[4] := 0;
+            end;
+          itemMonitor.MakeVisible(true);
+          TotalProgresso := TotalProgresso + 1;
+          ProgressBar1.Position := TotalProgresso;
+        end;
+    end;
+  ArquivoIni.Free;
+  frmPrincipal.Timer1.Enabled := true;
+  //FListaCryptos.Free;
+end;
+
+end.

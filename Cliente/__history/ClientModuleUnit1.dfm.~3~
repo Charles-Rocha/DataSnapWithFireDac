@@ -1,0 +1,37 @@
+object ClientModule1: TClientModule1
+  OldCreateOrder = False
+  Height = 271
+  Width = 415
+  object SQLConnection1: TSQLConnection
+    DriverName = 'DataSnap'
+    LoginPrompt = False
+    Params.Strings = (
+      'Port=212'
+      'CommunicationProtocol=tcp/ip'
+      'DatasnapContext=datasnap/')
+    Connected = True
+    Left = 48
+    Top = 40
+    UniqueId = '{481A7F79-F05F-4C4E-9A3E-C8812EDABED3}'
+  end
+  object dtsPessoa: TDataSource
+    DataSet = cdsPessoa
+    Left = 159
+    Top = 104
+  end
+  object DSProviderConnection1: TDSProviderConnection
+    ServerClassName = 'TServerMethods1'
+    Connected = True
+    SQLConnection = SQLConnection1
+    Left = 159
+    Top = 40
+  end
+  object cdsPessoa: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspPessoa'
+    RemoteServer = DSProviderConnection1
+    Left = 48
+    Top = 104
+  end
+end
