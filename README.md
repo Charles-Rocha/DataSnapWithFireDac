@@ -1,5 +1,5 @@
 <h1 align="center">    
-    <p>MyGetRight</p>
+    <p>DataSnapWithFireDac</p>
     <img src="./programa_tela_1.png"/>
     </br></br>    
     <img src="./programa_tela_2.png"/>
@@ -14,31 +14,30 @@
 
 ## 📘 Sobre
 
-**Prova Delphi MP**, onde consiste basicamente  apresentar uma pequena aplicação que permita realizar o download de arquivos da internet.
+**Prova Delphi WK Techonology**. O objetivo é fazer um cadastro simplificado de pessoas, com os dados da pessoa (tabela “pessoa”) e o CEP (tabela “endereco”). Este cadastro deverá ser feito na aplicação Destktop, consumindo os endpoint disponibilizados pela aplicação REST.
 
 ## 🛠 Ferramentas
 
 - [Delphi XE7](https://www.embarcadero.com/br/)
-- [SQLite](https://www.sqlite.org/index.html)
-- [SQLite Studio](https://sqlitestudio.pl/)
+- [Postgre](https://www.postgresql.org/)
 - [Git](https://git-scm.com/)
 - [Tortoise Git](https://tortoisegit.org/)
 - [Visual Studio Code](https://code.visualstudio.com/)
 
 ## 💡 Funcionalidades
 
-- **Iniciar download**: Tendo preenchido corretamente o campo **Url**, ao clicar, o usuário terá a opção de salvar o arquivo em disco com o nome que desejar. Quando começar o download, o painel de **Informações gerais** será exibido, informando o **Nome do arquivo**, **Tamanho do arquivo**, **Tempo decorrido** e **Progresso do download**.
+- **Aplicação Servidor**: Para realizar os testes, é necessário executar a aplicação **Servidor** na porta desejada, para que a aplicação **Cliente** possa consumir os seguintes endpoints: **Insert**, **Update**, **Delete** e **Cadastrar em Lote**.
 
-- **Parar download**: Uma vez iniciado o download, ao clicar nesse botão, o download é interrompido automaticamente.
+- **Aplicação Cliente**: Com a aplicação **Servidor** em execução, basta clicar no menu **Iniciar > Conexão** e conectar a aplicação **Cliente** à aplicação **Servidor** e consumir os métodos já mencionados. **OBS.:** Escolher a mesma porta usada na aplicação **Servidor**.
 
-- **Exibir mensagem**: Uma vez iniciado o download, ao clicar nesse botão, é exibida uma mensagem indicando a porcentagem atual do download.
+- **Cadastrar em Lote**: Será carregado o arquivo **lista-pessoas.csv** em memória e após isso, será inserido um total de **50 mil registros** na base de dados. Aqui foi utilizado o conceito de **FireDAC Array DML** para ser mais performático que a maneira tradicional. Vale ressaltar também que, foi necessário a inserção em lotes devido que o **Postgre** dava erro ao tentar inserir mais de **20 mil registros** de uma só vez.
 
-- **Exibir histórico de download**: Exibe o histórico dos downloads efetuados, sendo informado o **Código**, a **Url**, a **Data de Início** e a **Data final**.
+- **Inserir**: Opção para incluir um registro manualmente utilizando o endpoint **Insert**.
 
-- **Limpar**: Limpa o conteúdo do campo **Url**. O painel de **Informações gerais** ficará oculto.
+- **Editar**: Opção para editar um registro manualmente utilizando o endpoint **Update**.
 
-- **Fechar**: Ao clicar nesse botão, se houver algum download em andamento, o usuário será perguntado se deseja prosseguir, caso sim, o download é interrompido e a aplicação se encerra, caso contrário, o download prossegue normalmente.
+- **Deletar**: Opção para deletar um registro manualmente utilizando o endpoint **Delete**.
 
 ## 📄 Licença
 
-Esse software é **free** e foi construído para realizar a **Prova Delphi MP**.
+Esse software é **free** e foi construído para realizar a **Prova Delphi WK Techonology**.

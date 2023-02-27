@@ -58,16 +58,7 @@ begin
   dscep := edtCep.Text;
   ClientModule1.ServerMethods1Client.Insert(flnatureza, dsdocumento,
   nmprimeiro, nmsegundo, dtregistro, dscep);
-
-  with ClientModule1 do
-  begin
-    SQLConnection1.Connected := false;
-    SQLConnection1.Close;
-    cdsPessoa.Close;
-    SQLConnection1.Connected := true;
-    cdsPessoa.Open;
-  end;
-  frmCliente.lblTotalRegistros.Caption := 'Total de registros: ' + IntToStr(ClientModule1.cdsPessoa.RecordCount);
+  frmCliente.AtualizaGrid;
   LimpaCampos;
 end;
 

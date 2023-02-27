@@ -4,7 +4,7 @@ object frmCliente: TfrmCliente
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Cliente'
-  ClientHeight = 361
+  ClientHeight = 353
   ClientWidth = 683
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -30,28 +30,25 @@ object frmCliente: TfrmCliente
     Left = 0
     Top = 0
     Width = 683
-    Height = 361
+    Height = 353
     Align = alClient
     BevelOuter = bvNone
     TabOrder = 1
-    ExplicitWidth = 697
-    ExplicitHeight = 241
+    ExplicitHeight = 361
     object pnlGrid: TPanel
       Left = 0
       Top = 0
       Width = 683
-      Height = 337
+      Height = 329
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitTop = 8
-      ExplicitWidth = 697
-      ExplicitHeight = 217
+      ExplicitHeight = 337
       object dbgPessoa: TDBGrid
         Left = 0
         Top = 0
         Width = 683
-        Height = 337
+        Height = 329
         Align = alClient
         DataSource = ClientModule1.dtsPessoa
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
@@ -108,14 +105,13 @@ object frmCliente: TfrmCliente
     end
     object pnlTotalRegistros: TPanel
       Left = 0
-      Top = 337
+      Top = 329
       Width = 683
       Height = 24
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitTop = 280
-      ExplicitWidth = 697
+      ExplicitTop = 337
       object lblTotalRegistros: TLabel
         Left = 8
         Top = 4

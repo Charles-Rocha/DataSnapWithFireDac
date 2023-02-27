@@ -38,6 +38,7 @@ type
     procedure Inserir1Click(Sender: TObject);
     procedure Conectar1Click(Sender: TObject);
     procedure Editar1Click(Sender: TObject);
+    procedure AtualizaGrid;
   private
     { Private declarations }
   public
@@ -53,6 +54,19 @@ implementation
 
 uses ClientClassesUnit1, ClientModuleUnit1, untConectar, untEditar, untInserir;
 
+procedure TfrmCliente.AtualizaGrid;
+begin
+  with ClientModule1 do
+  begin
+    SQLConnection1.Connected := false;
+    SQLConnection1.Close;
+    cdsPessoa.Close;
+    SQLConnection1.Connected := true;
+    cdsPessoa.Open;
+  end;
+  frmCliente.lblTotalRegistros.Caption := 'Total de registros: ' + IntToStr(ClientModule1.cdsPessoa.RecordCount);
+end;
+
 procedure TfrmCliente.btnEnderecoIntegracaoClick(Sender: TObject);
 begin
   ClientModule1.ServerMethods1Client.EnderecoIntegracao;
@@ -62,8 +76,9 @@ procedure TfrmCliente.CadastraremLote1Click(Sender: TObject);
 var
   sPathFile: string;
 begin
-  sPathFile := ExtractFileName(Application.Name) + 'lista-clientes.csv';
+  sPathFile := ExtractFileName(Application.Name) + 'lista-pessoas.csv';
   ClientModule1.ServerMethods1Client.CadastramentoEmLote(sPathFile);
+  AtualizaGrid;
 end;
 
 procedure TfrmCliente.cdsPessoaAfterPost(DataSet: TDataSet);
@@ -82,16 +97,7 @@ var
 begin
   idPessoa := ClientModule1.cdsPessoaidpessoa.AsInteger;
   ClientModule1.ServerMethods1Client.Delete(idPessoa);
-
-  with ClientModule1 do
-  begin
-    SQLConnection1.Connected := false;
-    SQLConnection1.Close;
-    cdsPessoa.Close;
-    SQLConnection1.Connected := true;
-    cdsPessoa.Open;
-  end;
-  frmCliente.lblTotalRegistros.Caption := 'Total de registros: ' + IntToStr(ClientModule1.cdsPessoa.RecordCount);
+  AtualizaGrid;
 end;
 
 procedure TfrmCliente.Editar1Click(Sender: TObject);
