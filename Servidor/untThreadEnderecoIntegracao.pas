@@ -31,9 +31,6 @@ type
 
 implementation
 
-//uses
-//uses ServerMethodsUnit1;  //untPrincipal, untAtualizarCryptos;
-
 procedure TfThreadEnderecoIntegracao.Execute;
 var
   sCep, sDsuf, sNmcidade, sNmbairro, sNmlogradouro, sDscomplemento: string;
