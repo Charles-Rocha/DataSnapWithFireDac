@@ -77,7 +77,6 @@ object ServerMethods1: TServerMethods1
     end
   end
   object RESTResponseDataSetAdapter1: TRESTResponseDataSetAdapter
-    Active = True
     Dataset = ClientDataSet1
     FieldDefs = <>
     Response = RESTResponse1
@@ -85,7 +84,7 @@ object ServerMethods1: TServerMethods1
     Top = 264
   end
   object RESTResponse1: TRESTResponse
-    ContentType = 'application/json'
+    ContentType = 'application/xml'
     Left = 320
     Top = 208
   end
@@ -103,6 +102,7 @@ object ServerMethods1: TServerMethods1
     AcceptCharset = 'UTF-8, *;q=0.8'
     AcceptEncoding = 'identity'
     BaseURL = 'http://viacep.com.br/ws'
+    ContentType = 'application/x-www-form-urlencoded'
     Params = <>
     HandleRedirects = True
     RaiseExceptionOn500 = False
@@ -110,76 +110,8 @@ object ServerMethods1: TServerMethods1
     Top = 208
   end
   object ClientDataSet1: TClientDataSet
-    PersistDataPacket.Data = {
-      F80100009619E0BD01000000180000000A000100000003000000440103636570
-      02004A000000010005574944544802000200FE010A6C6F677261646F75726F02
-      004A000000010005574944544802000200FE010B636F6D706C656D656E746F02
-      004A000000010005574944544802000200FE010662616972726F02004A000000
-      010005574944544802000200FE010A6C6F63616C696461646502004A00000001
-      0005574944544802000200FE0102756602004A00000001000557494454480200
-      0200FE01046962676502004A000000010005574944544802000200FE01036769
-      6102004A000000010005574944544802000200FE010364646402004A00000001
-      0005574944544802000200FE0105736961666902004A00000001000557494454
-      4802000200FE0101000A4348414E47455F4C4F47040082000300000001000000
-      0000000004000000040000001200320032003700390030002D00360036003900
-      20004100760065006E006900640061002000540069006D0020004D0061006900
-      6100000030005200650063007200650069006F00200064006F00730020004200
-      61006E00640065006900720061006E007400650073001C00520069006F002000
-      6400650020004A0061006E006500690072006F00040052004A000E0033003300
-      30003400350035003700000004003200310008003600300030003100}
-    Active = True
     Aggregates = <>
-    FieldDefs = <
-      item
-        Name = 'cep'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'logradouro'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'complemento'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'bairro'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'localidade'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'uf'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'ibge'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'gia'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'ddd'
-        DataType = ftWideString
-        Size = 255
-      end
-      item
-        Name = 'siafi'
-        DataType = ftWideString
-        Size = 255
-      end>
+    FieldDefs = <>
     IndexDefs = <>
     Params = <>
     StoreDefs = True

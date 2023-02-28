@@ -126,13 +126,7 @@ begin
 
       if (LQuery.Params.ArraySize > 0) then
       begin
-        //Necessária a divisão em lotes por causa que o Postgre dava erro ao
-        //tentar inserir mais de 15000 registros de uma só vez
-        LQuery.Execute(10000, 0);
-        LQuery.Execute(10000 + 10000, 10000);
-        LQuery.Execute(10000 + 20000, 20000);
-        LQuery.Execute(10000 + 30000, 30000);
-        LQuery.Execute(10000 + 40000, 40000);
+        LQuery.Execute(LQuery.Params.ArraySize, 0);
       end;
 
       if FDConnection1.InTransaction then

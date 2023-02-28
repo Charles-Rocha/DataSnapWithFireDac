@@ -83,6 +83,7 @@ begin
       FQryEndereco.Next;
     end;
 
+    mtListaTemporaria.First;
     while not mtListaTemporaria.Eof do
     begin
       sNmcidade := mtListaTemporaria.FieldByName('localidade').AsString;
@@ -100,28 +101,6 @@ end;
 procedure TfThreadEnderecoIntegracao.InseriEnderecoIntegracao(mtListaTemporaria: TFDMemTable);
 var
   qryEnderecoIntegracao: TFDQuery;
-  iTamanhoLote: integer;
-begin
-  {qryEnderecoIntegracao := TFDQuery.Create(nil);
-  try
-    qryEnderecoIntegracao.Connection := FFDConnection;
-    qryEnderecoIntegracao.Close;
-    qryEnderecoIntegracao.SQL.Clear;
-    qryEnderecoIntegracao.SQL.Add('INSERT INTO endereco_integracao ');
-    qryEnderecoIntegracao.SQL.Add(' (idendereco, dsuf, nmcidade, nmbairro, nmlogradouro, dscomplemento) ');
-    qryEnderecoIntegracao.SQL.Add('VALUES ( ');
-    qryEnderecoIntegracao.SQL.Add(IntToStr(idendereco));
-    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sDsuf));
-    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sNmCidade));
-    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sNmBairro));
-    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sNmLogradouro));
-    qryEnderecoIntegracao.SQL.Add(', ' + QuotedStr(sDsComplemento));
-    qryEnderecoIntegracao.SQL.Add(' )');
-    qryEnderecoIntegracao.ExecSQL;
-  finally
-    qryEnderecoIntegracao.Free;
-  end;}
-
 begin
   qryEnderecoIntegracao := TFDQuery.Create(nil);
   FFDConnection.StartTransaction;
@@ -132,7 +111,6 @@ begin
       qryEnderecoIntegracao.SQL.Add(' insert into endereco_integracao(idendereco, dsuf, nmcidade, nmbairro, nmlogradouro, dscomplemento) ');
       qryEnderecoIntegracao.SQL.Add(' values (:idendereco, :dsuf, :nmcidade, :nmbairro, :nmlogradouro, :dscomplemento) ');
       qryEnderecoIntegracao.Params.ArraySize := mtListaTemporaria.RecordCount;
-      iTamanhoLote := mtListaTemporaria.RecordCount;
 
       mtListaTemporaria.First;
       while not mtListaTemporaria.Eof do
@@ -149,13 +127,7 @@ begin
 
       if (qryEnderecoIntegracao.Params.ArraySize > 0) then
       begin
-        //Necessária a divisão em lotes por causa que o Postgre dava erro ao
-        //tentar inserir mais de 15000 registros de uma só vez
-        qryEnderecoIntegracao.Execute(iTamanhoLote div 5, 0);
-        qryEnderecoIntegracao.Execute((iTamanhoLote div 5) + 10000, 10000);
-        qryEnderecoIntegracao.Execute((iTamanhoLote div 5) + 20000, 20000);
-        qryEnderecoIntegracao.Execute((iTamanhoLote div 5) + 30000, 30000);
-        qryEnderecoIntegracao.Execute((iTamanhoLote div 5) + 40000, 40000);
+        qryEnderecoIntegracao.Execute(qryEnderecoIntegracao.Params.ArraySize, 0);
       end;
 
       if FFDConnection.InTransaction then
@@ -175,8 +147,6 @@ begin
   finally
     qryEnderecoIntegracao.Free;
   end;
-end;
-
 end;
 
 end.

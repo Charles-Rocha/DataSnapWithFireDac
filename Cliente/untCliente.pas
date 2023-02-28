@@ -13,7 +13,6 @@ uses
 
 type
   TfrmCliente = class(TForm)
-    btnEnderecoIntegracao: TButton;
     MainMenu1: TMainMenu;
     Iniciar1: TMenuItem;
     Conectar1: TMenuItem;
@@ -30,8 +29,9 @@ type
     dbgPessoa: TDBGrid;
     pnlTotalRegistros: TPanel;
     lblTotalRegistros: TLabel;
+    EndereoIntegrao1: TMenuItem;
+    N3: TMenuItem;
     procedure cdsPessoaAfterPost(DataSet: TDataSet);
-    procedure btnEnderecoIntegracaoClick(Sender: TObject);
     procedure Sair1Click(Sender: TObject);
     procedure Deletar1Click(Sender: TObject);
     procedure CadastraremLote1Click(Sender: TObject);
@@ -39,6 +39,7 @@ type
     procedure Conectar1Click(Sender: TObject);
     procedure Editar1Click(Sender: TObject);
     procedure AtualizaGrid;
+    procedure EndereoIntegrao1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -65,11 +66,6 @@ begin
     cdsPessoa.Open;
   end;
   frmCliente.lblTotalRegistros.Caption := 'Total de registros: ' + IntToStr(ClientModule1.cdsPessoa.RecordCount);
-end;
-
-procedure TfrmCliente.btnEnderecoIntegracaoClick(Sender: TObject);
-begin
-  ClientModule1.ServerMethods1Client.EnderecoIntegracao;
 end;
 
 procedure TfrmCliente.CadastraremLote1Click(Sender: TObject);
@@ -103,6 +99,15 @@ end;
 procedure TfrmCliente.Editar1Click(Sender: TObject);
 begin
   frmEditar.ShowModal;
+end;
+
+procedure TfrmCliente.EndereoIntegrao1Click(Sender: TObject);
+begin
+  if not ClientModule1.cdsPessoa.IsEmpty then
+    ClientModule1.ServerMethods1Client.EnderecoIntegracao
+  else
+    Application.MessageBox('A tabela está vazia. Execute primeiro o Cadastro em Lote' + #13 +
+                           'ou Insira registros manualmente em Cadastro > Inserir','Aviso',mb_Ok+mb_IconExclamation);
 end;
 
 procedure TfrmCliente.Inserir1Click(Sender: TObject);

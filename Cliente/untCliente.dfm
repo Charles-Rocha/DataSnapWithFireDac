@@ -17,15 +17,6 @@ object frmCliente: TfrmCliente
   Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
-  object btnEnderecoIntegracao: TButton
-    Left = 367
-    Top = 250
-    Width = 122
-    Height = 25
-    Caption = 'Endereco Integra'#231#227'o'
-    TabOrder = 0
-    OnClick = btnEnderecoIntegracaoClick
-  end
   object pnlPrincipal: TPanel
     Left = 0
     Top = 0
@@ -33,8 +24,7 @@ object frmCliente: TfrmCliente
     Height = 353
     Align = alClient
     BevelOuter = bvNone
-    TabOrder = 1
-    ExplicitHeight = 361
+    TabOrder = 0
     object pnlGrid: TPanel
       Left = 0
       Top = 0
@@ -43,7 +33,6 @@ object frmCliente: TfrmCliente
       Align = alClient
       BevelOuter = bvNone
       TabOrder = 0
-      ExplicitHeight = 337
       object dbgPessoa: TDBGrid
         Left = 0
         Top = 0
@@ -111,7 +100,6 @@ object frmCliente: TfrmCliente
       Align = alBottom
       BevelOuter = bvNone
       TabOrder = 1
-      ExplicitTop = 337
       object lblTotalRegistros: TLabel
         Left = 8
         Top = 4
@@ -143,6 +131,13 @@ object frmCliente: TfrmCliente
       object CadastraremLote1: TMenuItem
         Caption = 'Cadastrar em Lote'
         OnClick = CadastraremLote1Click
+      end
+      object EndereoIntegrao1: TMenuItem
+        Caption = 'Endere'#231'o Integra'#231#227'o'
+        OnClick = EndereoIntegrao1Click
+      end
+      object N3: TMenuItem
+        Caption = '-'
       end
       object Inserir1: TMenuItem
         Caption = 'Inserir'
