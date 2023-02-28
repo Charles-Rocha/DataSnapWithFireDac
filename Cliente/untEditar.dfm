@@ -102,7 +102,7 @@ object frmEditar: TfrmEditar
   object edtCep: TMaskEdit
     Left = 520
     Top = 24
-    Width = 120
+    Width = 121
     Height = 21
     EditMask = '!99999-999;0;'
     MaxLength = 9

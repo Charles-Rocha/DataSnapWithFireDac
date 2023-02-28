@@ -34,7 +34,7 @@ type
     procedure cdsPessoaAfterPost(DataSet: TDataSet);
     procedure Sair1Click(Sender: TObject);
     procedure Deletar1Click(Sender: TObject);
-    procedure CadastraremLote1Click(Sender: TObject);
+    procedure CadastrarEmLote1Click(Sender: TObject);
     procedure Inserir1Click(Sender: TObject);
     procedure Conectar1Click(Sender: TObject);
     procedure Editar1Click(Sender: TObject);
@@ -69,15 +69,23 @@ begin
   frmCliente.lblTotalRegistros.Caption := 'Total de registros: ' + IntToStr(ClientModule1.cdsPessoa.RecordCount);
 end;
 
-procedure TfrmCliente.CadastraremLote1Click(Sender: TObject);
+procedure TfrmCliente.CadastrarEmLote1Click(Sender: TObject);
 var
   sPathFile: string;
 begin
   if not frmCliente.ChecarConexao then
     exit;
   sPathFile := ExtractFileName(Application.Name) + 'lista-pessoas.csv';
-  ClientModule1.ServerMethods1Client.CadastramentoEmLote(sPathFile);
-  AtualizaGrid;
+  try
+    ClientModule1.ServerMethods1Client.CadastramentoEmLote(sPathFile);
+    AtualizaGrid;
+    Application.MessageBox('Cadastramento em Lote realizado com sucesso','Aviso',mb_Ok+mb_IconExclamation);
+  except
+    on E:Exception do
+    begin
+      Application.MessageBox(PChar('Erro encontrado: ' + E.Message),'Aviso',mb_Ok+mb_IconExclamation);
+    end;
+  end;
 end;
 
 procedure TfrmCliente.cdsPessoaAfterPost(DataSet: TDataSet);
@@ -121,8 +129,17 @@ procedure TfrmCliente.EndereoIntegrao1Click(Sender: TObject);
 begin
   if not frmCliente.ChecarConexao then
     exit;
+
   if not ClientModule1.cdsPessoa.IsEmpty then
-    ClientModule1.ServerMethods1Client.EnderecoIntegracao
+    try
+      ClientModule1.ServerMethods1Client.EnderecoIntegracao;
+      Application.MessageBox('Endereço Integração realizado com sucesso','Aviso',mb_Ok+mb_IconExclamation);
+    except
+      on E:Exception do
+      begin
+        Application.MessageBox(PChar('Erro encontrado: ' + E.Message),'Aviso',mb_Ok+mb_IconExclamation);
+      end;
+    end
   else
     Application.MessageBox('A tabela está vazia. Execute primeiro o Cadastro em Lote' + #13 +
                            'ou Insira registros manualmente em Cadastro > Inserir','Aviso',mb_Ok+mb_IconExclamation);
