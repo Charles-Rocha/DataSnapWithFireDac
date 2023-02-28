@@ -1,5 +1,6 @@
 object ServerMethods1: TServerMethods1
   OldCreateOrder = False
+  OnCreate = DSServerModuleCreate
   Height = 369
   Width = 490
   object FDGUIxWaitCursor1: TFDGUIxWaitCursor
@@ -8,9 +9,6 @@ object ServerMethods1: TServerMethods1
     Top = 8
   end
   object FDPhysPgDriverLink1: TFDPhysPgDriverLink
-    VendorHome = 
-      'C:\Atalhos\Delphi XE7 Projetos\WK Technology\DataSnap+FireDac\Se' +
-      'rvidor\Win32\Debug\'
     Left = 40
     Top = 72
   end

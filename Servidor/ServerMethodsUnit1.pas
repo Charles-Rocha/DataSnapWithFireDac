@@ -42,6 +42,7 @@ type
     ClientDataSet1gia: TWideStringField;
     ClientDataSet1ddd: TWideStringField;
     ClientDataSet1siafi: TWideStringField;
+    procedure DSServerModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -168,6 +169,14 @@ begin
       raise;
     end;
   end;
+end;
+
+procedure TServerMethods1.DSServerModuleCreate(Sender: TObject);
+var
+  sCaminhoLibpq: string;
+begin
+  sCaminhoLibpq := (ExtractFilePath(Application.ExeName));
+  FDPhysPgDriverLink1.VendorLib := sCaminhoLibpq+'bin\libpq.dll';
 end;
 
 procedure TServerMethods1.EnderecoIntegracao;
