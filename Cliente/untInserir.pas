@@ -110,6 +110,12 @@ begin
     edtNmSegundo.SetFocus;
     Result := false;
   end;
+  if edtCep.Text = EmptyStr then
+  begin
+    Application.MessageBox('O campo Cep é de preenchimento obrigatório','Aviso',mb_Ok+mb_IconExclamation);
+    edtCep.SetFocus;
+    Result := false;
+  end;
 end;
 
 end.
