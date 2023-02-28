@@ -4,11 +4,10 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask;
 
 type
   TfrmInserir = class(TForm)
-    edtCep: TEdit;
     lblCep: TLabel;
     edtNmSegundo: TEdit;
     lblNmSegundo: TLabel;
@@ -20,6 +19,7 @@ type
     lblFlNatureza: TLabel;
     btnInserir: TButton;
     btnFechar: TButton;
+    edtCep: TMaskEdit;
     procedure btnInserirClick(Sender: TObject);
     procedure btnFecharClick(Sender: TObject);
   private
@@ -64,10 +64,10 @@ begin
     dsdocumento := edtDsDocumento.Text;
     nmprimeiro := edtNmPrimeiro.Text;
     nmsegundo := edtNmSegundo.Text;
-    dtregistro := now;
     dscep := edtCep.Text;
+    dtregistro := now;
     ClientModule1.ServerMethods1Client.Insert(flnatureza, dsdocumento,
-      nmprimeiro, nmsegundo, dtregistro, dscep);
+      nmprimeiro, nmsegundo, dscep, dtregistro);
     frmCliente.AtualizaGrid;
     LimpaCampos;
   end;
@@ -113,6 +113,12 @@ begin
   if edtCep.Text = EmptyStr then
   begin
     Application.MessageBox('O campo Cep é de preenchimento obrigatório','Aviso',mb_Ok+mb_IconExclamation);
+    edtCep.SetFocus;
+    Result := false;
+  end;
+  if Length(Trim(edtCep.Text)) < 8 then
+  begin
+    Application.MessageBox('O campo Cep deve ter 8 números','Aviso',mb_Ok+mb_IconExclamation);
     edtCep.SetFocus;
     Result := false;
   end;

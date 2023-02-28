@@ -48,9 +48,9 @@ type
     { Public declarations }
     threadMonitor: TfThreadEnderecoIntegracao;
     procedure Insert(flnatureza: integer; dsdocumento, nmprimeiro,
-      nmsegundo: string; dtregistro: TDateTime; dscep: string);
+      nmsegundo, dscep: string; dtregistro: TDateTime);
     procedure Update(idPessoa, flnatureza: integer;
-      dsdocumento, nmprimeiro, nmsegundo: string; dtregistro: TDateTime);
+      dsdocumento, nmprimeiro, nmsegundo, dscep: string; dtregistro: TDateTime);
     procedure Delete(idPessoa: integer);
     procedure GerarListaTemporaria(sPathFile: string);
     procedure CadastramentoEmLote(sPathFile: string);
@@ -67,7 +67,7 @@ implementation
 uses System.StrUtils;
 
 procedure TServerMethods1.Update(idpessoa, flnatureza: integer;
-  dsdocumento, nmprimeiro, nmsegundo: string; dtregistro: TDateTime);
+  dsdocumento, nmprimeiro, nmsegundo, dscep: string; dtregistro: TDateTime);
 begin
   try
     qryPessoa.Close;
@@ -78,6 +78,13 @@ begin
     qryPessoa.SQL.Add('    ,nmprimeiro = ' + QuotedStr(nmprimeiro));
     qryPessoa.SQL.Add('    ,nmsegundo = ' + QuotedStr(nmsegundo));
     qryPessoa.SQL.Add('    ,dtregistro = ' + QuotedStr(FormatDateTime('yyyy-mm-dd', now)));
+    qryPessoa.SQL.Add('WHERE idPessoa = ' + IntToStr(idPessoa));
+    qryPessoa.ExecSQL;
+
+    qryPessoa.Close;
+    qryPessoa.SQL.Clear;
+    qryPessoa.SQL.Add('UPDATE endereco ');
+    qryPessoa.SQL.Add('SET dscep = ' + QuotedStr(dscep));
     qryPessoa.SQL.Add('WHERE idPessoa = ' + IntToStr(idPessoa));
     qryPessoa.ExecSQL;
   except
@@ -177,7 +184,7 @@ begin
 end;
 
 procedure TServerMethods1.Insert(flnatureza: integer; dsdocumento,
-  nmprimeiro, nmsegundo: string; dtregistro: TDateTime; dscep: string);
+  nmprimeiro, nmsegundo, dscep: string; dtregistro: TDateTime);
 var
   idpessoa: string;
 begin

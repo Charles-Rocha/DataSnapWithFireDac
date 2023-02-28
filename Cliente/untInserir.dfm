@@ -51,14 +51,6 @@ object frmInserir: TfrmInserir
     Height = 13
     Caption = 'Natureza'
   end
-  object edtCep: TEdit
-    Left = 520
-    Top = 24
-    Width = 121
-    Height = 21
-    NumbersOnly = True
-    TabOrder = 4
-  end
   object edtNmSegundo: TEdit
     Left = 392
     Top = 24
@@ -105,5 +97,15 @@ object frmInserir: TfrmInserir
     Caption = 'Fechar'
     TabOrder = 6
     OnClick = btnFecharClick
+  end
+  object edtCep: TMaskEdit
+    Left = 520
+    Top = 24
+    Width = 121
+    Height = 21
+    EditMask = '!99999-999;0;'
+    MaxLength = 9
+    TabOrder = 4
+    Text = ''
   end
 end

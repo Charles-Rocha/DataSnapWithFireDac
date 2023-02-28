@@ -22,8 +22,8 @@ type
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
     destructor Destroy; override;
-    procedure Insert(flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime; dscep: string);
-    procedure Update(idPessoa: Integer; flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime);
+    procedure Insert(flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dscep: string; dtregistro: TDateTime);
+    procedure Update(idPessoa: Integer; flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dscep: string; dtregistro: TDateTime);
     procedure Delete(idPessoa: Integer);
     procedure GerarListaTemporaria(sPathFile: string);
     procedure CadastramentoEmLote(sPathFile: string);
@@ -32,7 +32,7 @@ type
 
 implementation
 
-procedure TServerMethods1Client.Insert(flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime; dscep: string);
+procedure TServerMethods1Client.Insert(flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dscep: string; dtregistro: TDateTime);
 begin
   if FInsertCommand = nil then
   begin
@@ -45,12 +45,12 @@ begin
   FInsertCommand.Parameters[1].Value.SetWideString(dsdocumento);
   FInsertCommand.Parameters[2].Value.SetWideString(nmprimeiro);
   FInsertCommand.Parameters[3].Value.SetWideString(nmsegundo);
-  FInsertCommand.Parameters[4].Value.AsDateTime := dtregistro;
-  FInsertCommand.Parameters[5].Value.SetWideString(dscep);
+  FInsertCommand.Parameters[4].Value.SetWideString(dscep);
+  FInsertCommand.Parameters[5].Value.AsDateTime := dtregistro;
   FInsertCommand.ExecuteUpdate;
 end;
 
-procedure TServerMethods1Client.Update(idPessoa: Integer; flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime);
+procedure TServerMethods1Client.Update(idPessoa: Integer; flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dscep: string; dtregistro: TDateTime);
 begin
   if FUpdateCommand = nil then
   begin
@@ -64,7 +64,8 @@ begin
   FUpdateCommand.Parameters[2].Value.SetWideString(dsdocumento);
   FUpdateCommand.Parameters[3].Value.SetWideString(nmprimeiro);
   FUpdateCommand.Parameters[4].Value.SetWideString(nmsegundo);
-  FUpdateCommand.Parameters[5].Value.AsDateTime := dtregistro;
+  FUpdateCommand.Parameters[5].Value.SetWideString(dscep);
+  FUpdateCommand.Parameters[6].Value.AsDateTime := dtregistro;
   FUpdateCommand.ExecuteUpdate;
 end;
 
