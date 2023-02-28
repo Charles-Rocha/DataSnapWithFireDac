@@ -21,7 +21,6 @@ object ServerMethods1: TServerMethods1
       'Password=WKTechnology'
       'Server=localhost'
       'DriverID=PG')
-    Connected = True
     LoginPrompt = False
     Left = 168
     Top = 8

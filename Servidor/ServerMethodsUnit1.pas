@@ -47,8 +47,6 @@ type
   public
     { Public declarations }
     threadMonitor: TfThreadEnderecoIntegracao;
-    function EchoString(Value: string): string;
-    function ReverseString(Value: string): string;
     procedure Insert(flnatureza: integer; dsdocumento, nmprimeiro,
       nmsegundo: string; dtregistro: TDateTime; dscep: string);
     procedure Update(idPessoa, flnatureza: integer;
@@ -165,11 +163,6 @@ begin
   end;
 end;
 
-function TServerMethods1.EchoString(Value: string): string;
-begin
-  Result := Value;
-end;
-
 procedure TServerMethods1.EnderecoIntegracao;
 begin
   qryEndereco.Open;
@@ -224,11 +217,6 @@ begin
       raise;
     end;
   end;
-end;
-
-function TServerMethods1.ReverseString(Value: string): string;
-begin
-  Result := System.StrUtils.ReverseString(Value);
 end;
 
 procedure TServerMethods1.GerarListaTemporaria(sPathFile: string);

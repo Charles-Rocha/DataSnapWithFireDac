@@ -12,12 +12,9 @@ uses System.JSON, Data.DBXCommon, Data.DBXClient, Data.DBXDataSnap, Data.DBXJSON
 type
   TServerMethods1Client = class(TDSAdminClient)
   private
-    FEchoStringCommand: TDBXCommand;
-    FReverseStringCommand: TDBXCommand;
     FInsertCommand: TDBXCommand;
     FUpdateCommand: TDBXCommand;
     FDeleteCommand: TDBXCommand;
-    FMostraTextoCommand: TDBXCommand;
     FGerarListaTemporariaCommand: TDBXCommand;
     FCadastramentoEmLoteCommand: TDBXCommand;
     FEnderecoIntegracaoCommand: TDBXCommand;
@@ -25,46 +22,15 @@ type
     constructor Create(ADBXConnection: TDBXConnection); overload;
     constructor Create(ADBXConnection: TDBXConnection; AInstanceOwner: Boolean); overload;
     destructor Destroy; override;
-    function EchoString(Value: string): string;
-    function ReverseString(Value: string): string;
     procedure Insert(flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime; dscep: string);
     procedure Update(idPessoa: Integer; flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime);
     procedure Delete(idPessoa: Integer);
-    function MostraTexto: string;
     procedure GerarListaTemporaria(sPathFile: string);
     procedure CadastramentoEmLote(sPathFile: string);
     procedure EnderecoIntegracao;
   end;
 
 implementation
-
-function TServerMethods1Client.EchoString(Value: string): string;
-begin
-  if FEchoStringCommand = nil then
-  begin
-    FEchoStringCommand := FDBXConnection.CreateCommand;
-    FEchoStringCommand.CommandType := TDBXCommandTypes.DSServerMethod;
-    FEchoStringCommand.Text := 'TServerMethods1.EchoString';
-    FEchoStringCommand.Prepare;
-  end;
-  FEchoStringCommand.Parameters[0].Value.SetWideString(Value);
-  FEchoStringCommand.ExecuteUpdate;
-  Result := FEchoStringCommand.Parameters[1].Value.GetWideString;
-end;
-
-function TServerMethods1Client.ReverseString(Value: string): string;
-begin
-  if FReverseStringCommand = nil then
-  begin
-    FReverseStringCommand := FDBXConnection.CreateCommand;
-    FReverseStringCommand.CommandType := TDBXCommandTypes.DSServerMethod;
-    FReverseStringCommand.Text := 'TServerMethods1.ReverseString';
-    FReverseStringCommand.Prepare;
-  end;
-  FReverseStringCommand.Parameters[0].Value.SetWideString(Value);
-  FReverseStringCommand.ExecuteUpdate;
-  Result := FReverseStringCommand.Parameters[1].Value.GetWideString;
-end;
 
 procedure TServerMethods1Client.Insert(flnatureza: Integer; dsdocumento: string; nmprimeiro: string; nmsegundo: string; dtregistro: TDateTime; dscep: string);
 begin
@@ -113,19 +79,6 @@ begin
   end;
   FDeleteCommand.Parameters[0].Value.SetInt32(idPessoa);
   FDeleteCommand.ExecuteUpdate;
-end;
-
-function TServerMethods1Client.MostraTexto: string;
-begin
-  if FMostraTextoCommand = nil then
-  begin
-    FMostraTextoCommand := FDBXConnection.CreateCommand;
-    FMostraTextoCommand.CommandType := TDBXCommandTypes.DSServerMethod;
-    FMostraTextoCommand.Text := 'TServerMethods1.MostraTexto';
-    FMostraTextoCommand.Prepare;
-  end;
-  FMostraTextoCommand.ExecuteUpdate;
-  Result := FMostraTextoCommand.Parameters[0].Value.GetWideString;
 end;
 
 procedure TServerMethods1Client.GerarListaTemporaria(sPathFile: string);
@@ -181,12 +134,9 @@ end;
 
 destructor TServerMethods1Client.Destroy;
 begin
-  FEchoStringCommand.DisposeOf;
-  FReverseStringCommand.DisposeOf;
   FInsertCommand.DisposeOf;
   FUpdateCommand.DisposeOf;
   FDeleteCommand.DisposeOf;
-  FMostraTextoCommand.DisposeOf;
   FGerarListaTemporariaCommand.DisposeOf;
   FCadastramentoEmLoteCommand.DisposeOf;
   FEnderecoIntegracaoCommand.DisposeOf;

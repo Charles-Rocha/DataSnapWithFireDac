@@ -44,6 +44,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    function ChecarConexao: boolean;
   end;
 
 var
@@ -72,6 +73,8 @@ procedure TfrmCliente.CadastraremLote1Click(Sender: TObject);
 var
   sPathFile: string;
 begin
+  if not frmCliente.ChecarConexao then
+    exit;
   sPathFile := ExtractFileName(Application.Name) + 'lista-pessoas.csv';
   ClientModule1.ServerMethods1Client.CadastramentoEmLote(sPathFile);
   AtualizaGrid;
@@ -80,6 +83,17 @@ end;
 procedure TfrmCliente.cdsPessoaAfterPost(DataSet: TDataSet);
 begin
   ClientModule1.cdsPessoa.ApplyUpdates(0);
+end;
+
+function TfrmCliente.ChecarConexao: boolean;
+begin
+  Result := true;
+  if not ClientModule1.SQLConnection1.Connected then
+  begin
+    Application.MessageBox('Não está conectado' + #13 +
+                           'Realizar conexão em Iniciar > Conexão','Aviso',mb_Ok+mb_IconExclamation);
+    Result := false;
+  end;
 end;
 
 procedure TfrmCliente.Conectar1Click(Sender: TObject);
@@ -91,6 +105,8 @@ procedure TfrmCliente.Deletar1Click(Sender: TObject);
 var
   idPessoa: integer;
 begin
+  if not frmCliente.ChecarConexao then
+    exit;
   idPessoa := ClientModule1.cdsPessoaidpessoa.AsInteger;
   ClientModule1.ServerMethods1Client.Delete(idPessoa);
   AtualizaGrid;
@@ -103,6 +119,8 @@ end;
 
 procedure TfrmCliente.EndereoIntegrao1Click(Sender: TObject);
 begin
+  if not frmCliente.ChecarConexao then
+    exit;
   if not ClientModule1.cdsPessoa.IsEmpty then
     ClientModule1.ServerMethods1Client.EnderecoIntegracao
   else

@@ -51,7 +51,6 @@ begin
       if SQLConnection1.Connected then
       begin
         frmCliente.lblTotalRegistros.Caption := 'Total de registros: ' + IntToStr(ClientModule1.cdsPessoa.RecordCount);
-        //ClientModule1.ServerMethods1Client.EnderecoIntegracao;
         btnConectar.Caption := 'Desconectar';
       end;
     end

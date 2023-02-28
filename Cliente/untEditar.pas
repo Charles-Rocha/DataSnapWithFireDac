@@ -25,6 +25,7 @@ type
     procedure FormShow(Sender: TObject);
   private
     { Private declarations }
+    function ValidaObrigatorios: boolean;
     procedure LimpaCampos;
   public
     { Public declarations }
@@ -45,16 +46,26 @@ var
   dsdocumento, nmprimeiro, nmsegundo: string;
   dtregistro: TDateTime;
 begin
-  idPessoa := ClientModule1.cdsPessoaidpessoa.AsInteger;
-  flnatureza := StrToInt(edtFlNatureza.Text);
-  dsdocumento := edtDsDocumento.Text;
-  nmprimeiro := edtNmPrimeiro.Text;
-  nmsegundo := edtNmSegundo.Text;
-  dtregistro := now;
-  ClientModule1.ServerMethods1Client.Update(idPessoa, flnatureza,
-    dsdocumento, nmprimeiro, nmsegundo, dtregistro);
-  frmCliente.AtualizaGrid;
-  LimpaCampos;
+  if not frmCliente.ChecarConexao then
+    exit;
+
+  if not ValidaObrigatorios then
+  begin
+    exit;
+  end
+  else
+  begin
+    idPessoa := ClientModule1.cdsPessoaidpessoa.AsInteger;
+    flnatureza := StrToInt(edtFlNatureza.Text);
+    dsdocumento := edtDsDocumento.Text;
+    nmprimeiro := edtNmPrimeiro.Text;
+    nmsegundo := edtNmSegundo.Text;
+    dtregistro := now;
+    ClientModule1.ServerMethods1Client.Update(idPessoa, flnatureza,
+      dsdocumento, nmprimeiro, nmsegundo, dtregistro);
+    frmCliente.AtualizaGrid;
+    LimpaCampos;
+  end;
 end;
 
 procedure TfrmEditar.btnFecharClick(Sender: TObject);
@@ -79,6 +90,35 @@ begin
   edtNmSegundo.Clear;
   edtCep.Clear;
   edtFlNatureza.SetFocus;
+end;
+
+function TfrmEditar.ValidaObrigatorios: boolean;
+begin
+  Result := true;
+  if edtFlNatureza.Text = EmptyStr then
+  begin
+    Application.MessageBox('O campo Natureza é de preenchimento obrigatório','Aviso',mb_Ok+mb_IconExclamation);
+    edtFlNatureza.SetFocus;
+    Result := false;
+  end;
+  if edtDsDocumento.Text = EmptyStr then
+  begin
+    Application.MessageBox('O campo Descrição documento é de preenchimento obrigatório','Aviso',mb_Ok+mb_IconExclamation);
+    edtDsDocumento.SetFocus;
+    Result := false;
+  end;
+  if edtNmPrimeiro.Text = EmptyStr then
+  begin
+    Application.MessageBox('O campo Primeiro nome é de preenchimento obrigatório','Aviso',mb_Ok+mb_IconExclamation);
+    edtNmPrimeiro.SetFocus;
+    Result := false;
+  end;
+  if edtNmSegundo.Text = EmptyStr then
+  begin
+    Application.MessageBox('O campo Segundo nome é de preenchimento obrigatório','Aviso',mb_Ok+mb_IconExclamation);
+    edtNmSegundo.SetFocus;
+    Result := false;
+  end;
 end;
 
 end.
