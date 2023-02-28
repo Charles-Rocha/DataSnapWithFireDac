@@ -57,6 +57,7 @@ object frmEditar: TfrmEditar
     Top = 24
     Width = 121
     Height = 21
+    NumbersOnly = True
     TabOrder = 4
   end
   object edtNmSegundo: TEdit
